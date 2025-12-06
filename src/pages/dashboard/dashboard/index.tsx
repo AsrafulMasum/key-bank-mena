@@ -1,21 +1,27 @@
 import TotalEarning from './TotalEarning';
 import TotalUserChart from './TotalUserChart';
-import { TbUsers } from 'react-icons/tb';
-import { LucideChartSpline, LucideHandCoins } from 'lucide-react';
-import { LuUserCheck, LuUserCog } from 'react-icons/lu';
-import { LiaGiftsSolid } from 'react-icons/lia';
-import TotalSubscriberChart from './TotalSubscriberChart';
+import { GiKeyring, GiMoneyStack } from 'react-icons/gi';
+import { BsHouseLock } from 'react-icons/bs';
+import { PiUsersThree } from 'react-icons/pi';
+import PieChartComp from './PieChartComp';
+import RecentActivity from './RecentActivity';
 
 const App: React.FC = () => {
     const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string }> = ({ icon, title, value }) => (
         <div className="rounded-lg shadow-sm border border-gray-200 p-2 2xl:p-4">
-            <div className="flex items-center gap-2">
-                <div className={`w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-xl`}>
-                    {icon}
-                </div>
+            <div className="flex items-center justify-between gap-2">
                 <div>
-                    <p className="text-xl font-semibold text-textBlack">{value}</p>
-                    <p className="text-secondaryText text-sm">{title}</p>
+                    <p className="text-secondaryText">{title}</p>
+                    <p className="text-xl font-semibold text-textBlack pt-1">{value}</p>
+                </div>
+                <div
+                    className={`w-16 h-16 rounded-lg flex items-center justify-center text-3xl ${
+                        title === 'Total Lockers' && 'bg-[#095CC71A] text-[#095CC7]'
+                    } ${title === 'Active Keys' && 'bg-[#C9961B1A] text-[#C9961B]'} ${
+                        title === 'Total Users' && 'bg-[#00A63E1A] text-[#00A63E]'
+                    } ${title === 'Monthly Revenue' && 'bg-[#9810FA1A] text-[#9810FA]'}`}
+                >
+                    {icon}
                 </div>
             </div>
         </div>
@@ -25,21 +31,24 @@ const App: React.FC = () => {
         <div>
             <div>
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3.5 mb-4">
-                    <StatCard icon={<TbUsers />} title="Total Customer" value="68k" />
-                    <StatCard icon={<LuUserCog />} title="Total Organizer" value="32k" />
-                    <StatCard icon={<LuUserCheck />} title="Total Subscriber" value="18K" />
-                    <StatCard icon={<LiaGiftsSolid />} title="Packages" value="20K" />
-                    <StatCard icon={<LucideHandCoins />} title="Total Income" value="78K" />
-                    <StatCard icon={<LucideChartSpline />} title="Total Revenue" value="18K" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-4">
+                    <StatCard icon={<BsHouseLock />} title="Total Lockers" value="68" />
+                    <StatCard icon={<GiKeyring />} title="Active Keys" value="169" />
+                    <StatCard icon={<PiUsersThree />} title="Total Users" value="3,802" />
+                    <StatCard icon={<GiMoneyStack />} title="Monthly Revenue" value="AED 45,085" />
                 </div>
 
-                {/* Users */}
-                <TotalUserChart />
-                {/* Revenue Chart */}
-                <TotalEarning />
-                {/* Subscriber Chart */}
-                <TotalSubscriberChart />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    {/* Revenue Chart */}
+                    <TotalEarning />
+
+                    {/* Users */}
+                    <TotalUserChart />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                    <RecentActivity />
+                    <PieChartComp />
+                </div>
             </div>
         </div>
     );

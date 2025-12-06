@@ -5,29 +5,12 @@ import { earningsData } from '../../../demo-data/home-data';
 
 const { Option } = Select;
 
-// const canadianCities = [
-//     'Toronto',
-//     'Vancouver',
-//     'Montreal',
-//     'Calgary',
-//     'Ottawa',
-//     'Edmonton',
-//     'Quebec City',
-//     'Winnipeg',
-//     'Halifax',
-//     'Victoria',
-// ];
-
 const CustomLegend = () => {
     return (
         <div className="flex gap-2 2xl:gap-4 text-sm text-[#757575] pr-4">
             <div className="flex items-center gap-1 whitespace-nowrap">
-                <div className="w-3 h-3 bg-[#C9961B] rounded-full" />
-                Customers
-            </div>
-            <div className="flex items-center gap-1 whitespace-nowrap">
-                <div className="w-3 h-3 bg-[#52C41A] rounded-full" />
-                Organizers
+                <div className="w-3 h-3 bg-[#353355] rounded-full" />
+                Revenue
             </div>
         </div>
     );
@@ -35,23 +18,14 @@ const CustomLegend = () => {
 
 const TotalUserChart = () => {
     const [selectedYear, setSelectedYear] = useState('2025');
-    // const [selectedCity, setSelectedCity] = useState('Toronto');
 
     return (
         <div>
             <Card className="mb-4 rounded-lg shadow-sm border border-gray-200">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-semibold">Total Users</h2>
+                    <h2 className="text-lg font-semibold">Total Revenue (AED)</h2>
                     <div className="flex gap-2">
                         <CustomLegend />
-                        {/* City Dropdown */}
-                        {/* <Select value={selectedCity} onChange={setSelectedCity} className="w-40">
-                            {canadianCities.map((city) => (
-                                <Option key={city} value={city}>
-                                    {city}
-                                </Option>
-                            ))}
-                        </Select> */}
 
                         {/* Year Dropdown */}
                         <Select value={selectedYear} onChange={setSelectedYear} className="w-24">
@@ -62,7 +36,7 @@ const TotalUserChart = () => {
                     </div>
                 </div>
 
-                <ResponsiveContainer width="100%" height={240}>
+                <ResponsiveContainer width="100%" height={200}>
                     <BarChart data={earningsData}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                         <XAxis dataKey="month" stroke="#999" style={{ fontSize: '12px' }} />
@@ -77,20 +51,8 @@ const TotalUserChart = () => {
                             }}
                             labelStyle={{ color: '#c61f1f' }}
                         />
-                        <Bar
-                            dataKey="value"
-                            name="Customers"
-                            fill="#C9961B"
-                            radius={[6, 6, 0, 0]} // rounded top corners
-                            barSize={15}
-                        />
-                        <Bar
-                            dataKey="value"
-                            name="Organizers"
-                            fill="#52C41A"
-                            radius={[6, 6, 0, 0]} // rounded top corners
-                            barSize={15}
-                        />
+
+                        <Bar dataKey="value" name="Organizers" fill="#353355" radius={[6, 6, 0, 0]} barSize={30} />
                     </BarChart>
                 </ResponsiveContainer>
             </Card>

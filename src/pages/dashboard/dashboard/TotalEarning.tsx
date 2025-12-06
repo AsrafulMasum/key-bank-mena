@@ -5,25 +5,12 @@ import { earningsData } from '../../../demo-data/home-data';
 
 const { Option } = Select;
 
-// const canadianCities = [
-//     'Toronto',
-//     'Vancouver',
-//     'Montreal',
-//     'Calgary',
-//     'Ottawa',
-//     'Edmonton',
-//     'Quebec City',
-//     'Winnipeg',
-//     'Halifax',
-//     'Victoria',
-// ];
-
 const CustomLegend = () => {
     return (
         <div className="flex gap-2 2xl:gap-4 text-sm text-[#757575] pr-4">
             <div className="flex items-center gap-1 whitespace-nowrap">
                 <div className="w-3 h-3 bg-[#C9961B] rounded-full" />
-                Revenue
+                Keys
             </div>
         </div>
     );
@@ -31,24 +18,14 @@ const CustomLegend = () => {
 
 const TotalEarning = () => {
     const [selectedYear, setSelectedYear] = useState('2025');
-    // const [selectedCity, setSelectedCity] = useState('Toronto');
 
     return (
         <div>
             <Card className="rounded-lg shadow-sm border border-gray-200">
                 <div className="flex justify-between items-center mb-4 gap-4">
-                    <h2 className="text-lg font-semibold">Total Revenue</h2>
+                    <h2 className="text-lg font-semibold">Key Activity</h2>
                     <div className="flex gap-2">
                         <CustomLegend />
-                        {/* City Dropdown */}
-                        {/* <Select value={selectedCity} onChange={setSelectedCity} className="w-40">
-                            {canadianCities.map((city) => (
-                                <Option key={city} value={city}>
-                                    {city}
-                                </Option>
-                            ))}
-                        </Select> */}
-
                         {/* Year Dropdown */}
                         <Select value={selectedYear} onChange={setSelectedYear} className="w-24">
                             <Option value="2023">2023</Option>
@@ -58,7 +35,7 @@ const TotalEarning = () => {
                     </div>
                 </div>
 
-                <ResponsiveContainer width="100%" height={250}>
+                <ResponsiveContainer width="100%" height={200}>
                     <AreaChart data={earningsData}>
                         <defs>
                             <linearGradient id="colorEarnings" x1="0" y1="0" x2="0" y2="1">
@@ -88,7 +65,7 @@ const TotalEarning = () => {
                             fillOpacity={1}
                             fill="url(#colorEarnings)"
                             activeDot={{ r: 6 }}
-                            dot={{ fill: '#C9961B', r: 4 }}
+                            // dot={{ fill: '#C9961B', r: 4 }}
                         />
                     </AreaChart>
                 </ResponsiveContainer>
