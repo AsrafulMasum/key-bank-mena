@@ -36,7 +36,7 @@ const TotalUserChart = () => {
                     </div>
                 </div>
 
-                <ResponsiveContainer width="100%" height={200}>
+                <ResponsiveContainer width="100%" height={230}>
                     <BarChart data={earningsData}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                         <XAxis dataKey="month" stroke="#999" style={{ fontSize: '12px' }} />
@@ -51,7 +51,6 @@ const TotalUserChart = () => {
                             }}
                             labelStyle={{ color: '#c61f1f' }}
                         />
-
                         <Bar dataKey="value" name="Organizers" fill="#353355" radius={[6, 6, 0, 0]} barSize={30} />
                     </BarChart>
                 </ResponsiveContainer>

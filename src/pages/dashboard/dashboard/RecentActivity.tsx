@@ -49,7 +49,7 @@ const activities: ActivityItem[] = [
 
 const RecentActivity: React.FC = () => {
     return (
-        <Card className="w-full bg-white rounded-xl p-6 shadow-sm col-span-2">
+        <Card className="w-full bg-white rounded-xl shadow-sm col-span-2">
             <h3 className="text-lg font-semibold text-[#1A1A1A] mb-4">
                 Recent Activity
             </h3>

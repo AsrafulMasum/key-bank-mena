@@ -56,7 +56,7 @@ const PieChartComp: React.FC = () => {
         <Card className="flex flex-col gap-3 rounded-lg shadow-sm border border-gray-200">
             <h3 className="text-lg font-semibold text-[#1A1A1A]">Locker Distribution</h3>
 
-            <div className="flex flex-col items-center gap-6">
+            <div className="flex flex-col items-center">
                 {/* Pie Chart */}
                 <div>
                     <PieChart width={250} height={250}>
