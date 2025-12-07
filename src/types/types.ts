@@ -225,3 +225,13 @@ export type CityType = {
     cityName: string;
     status: StatusType;
 };
+
+export interface LockerType {
+    _id?: string;
+    lockerID: string;
+    name: string;
+    lockerLocation: string;
+    capacity: number;
+    lastActivity: string;
+    deliveryStatus: 'active' | 'maintenance' | 'offline';
+}

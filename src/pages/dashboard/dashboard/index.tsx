@@ -6,49 +6,47 @@ import { PiUsersThree } from 'react-icons/pi';
 import PieChartComp from './PieChartComp';
 import RecentActivity from './RecentActivity';
 
-const App: React.FC = () => {
-    const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string }> = ({ icon, title, value }) => (
-        <div className="rounded-lg shadow-sm border border-gray-200 p-2 2xl:p-4">
-            <div className="flex items-center justify-between gap-2">
-                <div>
-                    <p className="text-secondaryText">{title}</p>
-                    <p className="text-xl font-semibold text-textBlack pt-1">{value}</p>
-                </div>
-                <div
-                    className={`w-16 h-16 rounded-lg flex items-center justify-center text-3xl ${
-                        title === 'Total Lockers' && 'bg-[#095CC71A] text-[#095CC7]'
-                    } ${title === 'Active Keys' && 'bg-[#C9961B1A] text-[#C9961B]'} ${
-                        title === 'Total Users' && 'bg-[#00A63E1A] text-[#00A63E]'
-                    } ${title === 'Monthly Revenue' && 'bg-[#9810FA1A] text-[#9810FA]'}`}
-                >
-                    {icon}
-                </div>
+export const StatCard: React.FC<{ icon: React.ReactNode; title: string; value: string }> = ({ icon, title, value }) => (
+    <div className="rounded-lg shadow-sm border border-gray-200 p-2 2xl:p-4">
+        <div className="flex items-center justify-between gap-2">
+            <div>
+                <p className="text-secondaryText">{title}</p>
+                <p className="text-xl font-semibold text-textBlack pt-1">{value}</p>
+            </div>
+            <div
+                className={`w-16 h-16 rounded-lg flex items-center justify-center text-3xl ${
+                    title === 'Total Lockers' && 'bg-[#095CC71A] text-[#095CC7]'
+                } ${title === 'Active Keys' && 'bg-[#C9961B1A] text-[#C9961B]'} ${
+                    title === 'Total Users' && 'bg-[#00A63E1A] text-[#00A63E]'
+                } ${title === 'Monthly Revenue' && 'bg-[#9810FA1A] text-[#9810FA]'}`}
+            >
+                {icon}
             </div>
         </div>
-    );
+    </div>
+);
 
+const App: React.FC = () => {
     return (
         <div>
-            <div>
-                {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-4">
-                    <StatCard icon={<BsHouseLock />} title="Total Lockers" value="68" />
-                    <StatCard icon={<GiKeyring />} title="Active Keys" value="169" />
-                    <StatCard icon={<PiUsersThree />} title="Total Users" value="3,802" />
-                    <StatCard icon={<GiMoneyStack />} title="Monthly Revenue" value="AED 45,085" />
-                </div>
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-4">
+                <StatCard icon={<BsHouseLock />} title="Total Lockers" value="68" />
+                <StatCard icon={<GiKeyring />} title="Active Keys" value="169" />
+                <StatCard icon={<PiUsersThree />} title="Total Users" value="3,802" />
+                <StatCard icon={<GiMoneyStack />} title="Monthly Revenue" value="AED 45,085" />
+            </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                    {/* Revenue Chart */}
-                    <TotalEarning />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                {/* Revenue Chart */}
+                <TotalEarning />
 
-                    {/* Users */}
-                    <TotalUserChart />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-                    <RecentActivity />
-                    <PieChartComp />
-                </div>
+                {/* Users */}
+                <TotalUserChart />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                <RecentActivity />
+                <PieChartComp />
             </div>
         </div>
     );
