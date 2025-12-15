@@ -5,6 +5,11 @@ import { Order } from '../../../types/types';
 import { CiCircleInfo } from 'react-icons/ci';
 import { useState } from 'react';
 import OrderDetailsModal from '../../../components/modals/OrderDetailsModal';
+import { StatCard } from '../dashboard';
+import { BsHouseLock } from 'react-icons/bs';
+import { GiKeyring, GiMoneyStack } from 'react-icons/gi';
+import TotalEarning from '../dashboard/TotalEarning';
+import TotalUserChart from '../dashboard/TotalUserChart';
 
 const { Option } = Select;
 
@@ -193,7 +198,6 @@ const data: Order[] = [
     },
 ];
 
-
 const statusColorMap = {
     pending: { color: '#D48806', bg: '#F7F1CC' },
     processing: { color: '#1890FF', bg: '#D9EEFF' },
@@ -345,6 +349,18 @@ export default function Orders({ dashboard }: { dashboard?: boolean }) {
 
     return (
         <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 mb-4">
+                <StatCard icon={<BsHouseLock />} title="Total Lockers" value="68" />
+                <StatCard icon={<GiKeyring />} title="Active Keys" value="169" />
+                <StatCard icon={<GiMoneyStack />} title="Monthly Revenue" value="AED 45,085" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                {/* Revenue Chart */}
+                <TotalEarning />
+
+                {/* Users */}
+                <TotalUserChart />
+            </div>
             <div className="rounded-lg shadow-sm border border-gray-200 p-4">
                 <div className="flex items-center justify-between mb-4">
                     <HeaderTitle title="Bookings" />
@@ -373,7 +389,7 @@ export default function Orders({ dashboard }: { dashboard?: boolean }) {
                     <Table
                         columns={columns}
                         dataSource={data as any}
-                        pagination={dashboard ? false : { pageSize: 9, total: data.length }}
+                        pagination={dashboard ? false : { pageSize: 5, total: data.length }}
                         className="custom-table"
                     />
                 </ConfigProvider>

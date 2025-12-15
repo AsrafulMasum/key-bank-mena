@@ -1,11 +1,11 @@
 import { BsPatchQuestion } from 'react-icons/bs';
 import { TSidebarItem } from './generateSidebarItems';
-import { LuClipboardList, LuLayoutDashboard } from 'react-icons/lu';
+import { LuClipboardList, LuLayoutDashboard} from 'react-icons/lu';
 import { TbBook } from 'react-icons/tb';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { FaRegCircleQuestion } from 'react-icons/fa6';
 import { GiKeyring, GiMoneyStack } from 'react-icons/gi';
-import { PiUsers } from 'react-icons/pi';
+import { PiUserGear, PiUsers } from 'react-icons/pi';
 import { LiaCcMastercard } from 'react-icons/lia';
 
 const sidebarItems: TSidebarItem[] = [
@@ -26,12 +26,6 @@ const sidebarItems: TSidebarItem[] = [
     //     label: 'Categories',
     //     path: 'categories',
     //     icon: <MdOutlineCategory size={24} />,
-    // },
-    // {
-    //     key: 'chefs',
-    //     label: 'Organizers',
-    //     path: 'chefs',
-    //     icon: <LuUserCog size={24} />,
     // },
     {
         key: 'users',
@@ -58,17 +52,23 @@ const sidebarItems: TSidebarItem[] = [
         icon: <GiMoneyStack size={24} />,
     },
     {
+        key: 'chefs',
+        label: 'Manage Admin',
+        path: 'chefs',
+        icon: <PiUserGear size={24} />,
+    },
+    {
         key: 'settings',
         label: 'Settings',
         path: 'settings',
         icon: <IoSettingsOutline size={24} />,
         children: [
-            {
-                key: 'faq',
-                label: 'FAQs',
-                path: 'faq',
-                icon: <FaRegCircleQuestion size={20} />,
-            },
+            // {
+            //     key: 'faq',
+            //     label: 'FAQs',
+            //     path: 'faq',
+            //     icon: <FaRegCircleQuestion size={20} />,
+            // },
             {
                 key: 'about-us',
                 label: 'About us',
@@ -87,12 +87,12 @@ const sidebarItems: TSidebarItem[] = [
                 path: 'privacy-policy',
                 icon: <LuClipboardList size={20} />,
             },
-            {
-                key: 'disclaimer',
-                label: 'Disclaimer',
-                path: 'disclaimer',
-                icon: <BsPatchQuestion size={20} />,
-            },
+            // {
+            //     key: 'disclaimer',
+            //     label: 'Disclaimer',
+            //     path: 'disclaimer',
+            //     icon: <BsPatchQuestion size={20} />,
+            // },
         ],
     },
 ];

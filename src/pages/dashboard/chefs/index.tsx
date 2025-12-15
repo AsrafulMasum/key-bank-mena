@@ -1,45 +1,12 @@
-import { Button, ConfigProvider, Input, Select, Table } from 'antd';
+import { Button, ConfigProvider, Input, Table } from 'antd';
 import { useState } from 'react';
 import HeaderTitle from '../../../components/shared/HeaderTitle';
 import { CiCircleInfo, CiLock, CiUnlock } from 'react-icons/ci';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { PlusOutlined } from '@ant-design/icons';
 import { User } from '../../../types/types';
 import UserModal from '../users/UserModal';
 import BlockModal from '../users/BlockModal';
-
-const { Option } = Select;
-
-const canadianCities = [
-    'Toronto',
-    'Vancouver',
-    'Montreal',
-    'Calgary',
-    'Edmonton',
-    'Ottawa',
-    'Winnipeg',
-    'Quebec City',
-    'Hamilton',
-    'Kitchener',
-    'London',
-    'Victoria',
-    'Halifax',
-    'Oshawa',
-    'Windsor',
-    'Saskatoon',
-    'Regina',
-    'St. Johns',
-    'Barrie',
-    'Kelowna',
-    'Abbotsford',
-    'Sherbrooke',
-    'Guelph',
-    'Kingston',
-    'Forfield', // From your original data
-    'Noperville', // From your original data
-    'Orange', // From your original data
-    'Toledo', // From your original data
-    'Austin', // From your original data
-];
 
 const userData: User[] = [
     {
@@ -159,6 +126,7 @@ export default function Organizers({ dashboard }: { dashboard?: boolean }) {
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [isBlockModalVisible, setIsBlockModalVisible] = useState<boolean>(false);
     const [userToBlock, setUserToBlock] = useState<User | null>(null);
+    const [openAddModal, setOpenAddModal] = useState<boolean>(false);
 
     const showUserDetails = (user: User) => {
         setSelectedUser(user);
@@ -206,75 +174,10 @@ export default function Organizers({ dashboard }: { dashboard?: boolean }) {
             responsive: ['md'] as any,
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'Role',
+            dataIndex: 'role',
+            key: 'role',
             responsive: ['lg'] as any,
-        },
-        {
-            title: 'City',
-            dataIndex: 'city',
-            key: 'city',
-            responsive: ['lg'] as any,
-            filterDropdown: ({
-                setSelectedKeys,
-                selectedKeys,
-                confirm,
-                clearFilters,
-            }: {
-                setSelectedKeys?: (keys: React.Key[]) => void;
-                selectedKeys?: React.Key[];
-                confirm?: () => void;
-                clearFilters?: () => void;
-            }) => (
-                <div style={{ padding: 8 }}>
-                    <Select
-                        placeholder="Select a Canadian city"
-                        value={selectedKeys?.[0] ?? undefined}
-                        style={{ width: 200 }}
-                        onChange={(value) => {
-                            setSelectedKeys?.(value ? [value] : []);
-                            confirm?.();
-                        }}
-                        allowClear
-                        showSearch
-                        filterOption={(input, option) =>
-                            (option?.children as unknown as string).toLowerCase().includes(input.toLowerCase())
-                        }
-                    >
-                        {canadianCities?.map((city) => (
-                            <Option key={city} value={city}>
-                                {city}
-                            </Option>
-                        ))}
-                    </Select>
-                    <div style={{ marginTop: 8 }}>
-                        <a
-                            onClick={() => {
-                                clearFilters?.();
-                                confirm?.();
-                            }}
-                            style={{ width: 90, marginRight: 8 }}
-                        >
-                            Reset
-                        </a>
-                    </div>
-                </div>
-            ),
-            onFilter: (value: boolean | React.Key, record: User) => record.city === value,
-            render: (city: string) => city,
-        },
-        {
-            title: 'Registration Date',
-            dataIndex: 'createdAt',
-            key: 'createdAt',
-            responsive: ['sm'] as any,
-        },
-        {
-            title: 'Country',
-            dataIndex: 'country',
-            key: 'country',
-            responsive: ['sm'] as any,
         },
         {
             title: 'Action',
@@ -313,13 +216,21 @@ export default function Organizers({ dashboard }: { dashboard?: boolean }) {
         <>
             <div className="rounded-lg shadow-sm border border-gray-200 p-4">
                 <div className="flex items-center justify-between mb-4">
-                    <HeaderTitle title="Organizers" />
-                    <Input
-                        placeholder="Search"
-                        className=""
-                        style={{ width: 280, height: 40 }}
-                        prefix={<i className="bi bi-search"></i>}
-                    />
+                    <HeaderTitle title="Manage Admin" />
+                    <div className='flex items-center gap-4'>
+                        <Input
+                            placeholder="Search"
+                            className=""
+                            style={{ width: 280, height: 40 }}
+                            prefix={<i className="bi bi-search"></i>}
+                        />
+                        <button
+                            className="bg-primary h-10 px-4 rounded-md text-white text-sm space-x-1"
+                            onClick={() => setOpenAddModal(true)}
+                        >
+                            <PlusOutlined /> Add Admin
+                        </button>
+                    </div>
                 </div>
                 <ConfigProvider
                     theme={{

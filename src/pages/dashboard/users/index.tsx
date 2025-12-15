@@ -1,45 +1,13 @@
-import { Button, ConfigProvider, Input, Select, Table } from 'antd';
+import { ConfigProvider, Input, Table } from 'antd';
 import { useState } from 'react';
 import UserModal from './UserModal';
 import BlockModal from './BlockModal';
 import HeaderTitle from '../../../components/shared/HeaderTitle';
-import { CiCircleInfo, CiLock, CiUnlock } from 'react-icons/ci';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { User } from '../../../types/types';
-
-const { Option } = Select;
-
-const canadianCities = [
-    'Toronto',
-    'Vancouver',
-    'Montreal',
-    'Calgary',
-    'Edmonton',
-    'Ottawa',
-    'Winnipeg',
-    'Quebec City',
-    'Hamilton',
-    'Kitchener',
-    'London',
-    'Victoria',
-    'Halifax',
-    'Oshawa',
-    'Windsor',
-    'Saskatoon',
-    'Regina',
-    'St. Johns',
-    'Barrie',
-    'Kelowna',
-    'Abbotsford',
-    'Sherbrooke',
-    'Guelph',
-    'Kingston',
-    'Forfield', // From your original data
-    'Noperville', // From your original data
-    'Orange', // From your original data
-    'Toledo', // From your original data
-    'Austin', // From your original data
-];
+import { StatCard } from '../dashboard';
+import { BsHouseLock } from 'react-icons/bs';
+import { GiKeyring, GiMoneyStack } from 'react-icons/gi';
+import { PiUsersThree } from 'react-icons/pi';
 
 const userData: User[] = [
     {
@@ -160,20 +128,20 @@ export default function Users({ dashboard }: { dashboard?: boolean }) {
     const [isBlockModalVisible, setIsBlockModalVisible] = useState<boolean>(false);
     const [userToBlock, setUserToBlock] = useState<User | null>(null);
 
-    const showUserDetails = (user: User) => {
-        setSelectedUser(user);
-        setIsModalVisible(true);
-    };
+    // const showUserDetails = (user: User) => {
+    //     setSelectedUser(user);
+    //     setIsModalVisible(true);
+    // };
 
     const handleModalClose = () => {
         setIsModalVisible(false);
         setSelectedUser(null);
     };
 
-    const showBlockModal = (user: User) => {
-        setUserToBlock(user);
-        setIsBlockModalVisible(true);
-    };
+    // const showBlockModal = (user: User) => {
+    //     setUserToBlock(user);
+    //     setIsBlockModalVisible(true);
+    // };
 
     const handleBlockConfirm = () => {
         // Handle block user logic here
@@ -195,122 +163,74 @@ export default function Users({ dashboard }: { dashboard?: boolean }) {
             responsive: ['sm'] as any,
         },
         {
-            title: 'Name',
+            title: 'Key Id',
+            dataIndex: 'key',
+            key: 'key',
+        },
+        {
+            title: 'User Name',
             dataIndex: 'userName',
             key: 'userName',
         },
         {
-            title: 'Email',
-            dataIndex: 'email',
-            key: 'email',
+            title: 'User Type',
+            dataIndex: 'userType',
+            key: 'userType',
             responsive: ['md'] as any,
         },
         {
-            title: 'Address',
+            title: 'Locker',
             dataIndex: 'address',
             key: 'address',
             responsive: ['lg'] as any,
         },
         {
-            title: 'City',
-            dataIndex: 'city',
-            key: 'city',
-            responsive: ['lg'] as any,
-            filterDropdown: ({
-                setSelectedKeys,
-                selectedKeys,
-                confirm,
-                clearFilters,
-            }: {
-                setSelectedKeys?: (keys: React.Key[]) => void;
-                selectedKeys?: React.Key[];
-                confirm?: () => void;
-                clearFilters?: () => void;
-            }) => (
-                <div style={{ padding: 8 }}>
-                    <Select
-                        placeholder="Select a Canadian city"
-                        value={selectedKeys?.[0] ?? undefined}
-                        style={{ width: 200 }}
-                        onChange={(value) => {
-                            setSelectedKeys?.(value ? [value] : []);
-                            confirm?.();
-                        }}
-                        allowClear
-                        showSearch
-                        filterOption={(input, option) =>
-                            (option?.children as unknown as string).toLowerCase().includes(input.toLowerCase())
-                        }
-                    >
-                        {canadianCities?.map((city) => (
-                            <Option key={city} value={city}>
-                                {city}
-                            </Option>
-                        ))}
-                    </Select>
-                    <div style={{ marginTop: 8 }}>
-                        <a
-                            onClick={() => {
-                                clearFilters?.();
-                                confirm?.();
-                            }}
-                            style={{ width: 90, marginRight: 8 }}
-                        >
-                            Reset
-                        </a>
-                    </div>
-                </div>
-            ),
-            onFilter: (value: boolean | React.Key, record: User) => record.city === value,
-            render: (city: string) => city,
-        },
-        {
-            title: 'Registration Date',
+            title: 'Status',
             dataIndex: 'createdAt',
             key: 'createdAt',
             responsive: ['sm'] as any,
         },
-        {
-            title: 'Country',
-            dataIndex: 'country',
-            key: 'country',
-            responsive: ['sm'] as any,
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (_: any, record: User) => (
-                <div className="flex gap-2">
-                    <Button
-                        type="text"
-                        icon={<CiCircleInfo size={24} />}
-                        className="text-gray-500 hover:text-primary"
-                        onClick={() => showUserDetails(record)}
-                    />
+        // {
+        //     title: 'Action',
+        //     key: 'action',
+        //     render: (_: any, record: User) => (
+        //         <div className="flex gap-2">
+        //             <Button
+        //                 type="text"
+        //                 icon={<CiCircleInfo size={24} />}
+        //                 className="text-gray-500 hover:text-primary"
+        //                 onClick={() => showUserDetails(record)}
+        //             />
 
-                    <Button
-                        type="text"
-                        icon={record?.status == 'active' ? <CiLock size={24} /> : <CiUnlock size={24} />}
-                        className={
-                            record?.status == 'active'
-                                ? 'text-gray-500 hover:!text-red-500'
-                                : 'hover:!text-gray-500 !text-red-500'
-                        }
-                        onClick={() => showBlockModal(record)}
-                    />
-                    <Button
-                        type="text"
-                        icon={<MdOutlineDeleteOutline size={24} />}
-                        className={'text-red-400 hover:!text-red-500'}
-                        onClick={() => showBlockModal(record)}
-                    />
-                </div>
-            ),
-        },
+        //             <Button
+        //                 type="text"
+        //                 icon={record?.status == 'active' ? <CiLock size={24} /> : <CiUnlock size={24} />}
+        //                 className={
+        //                     record?.status == 'active'
+        //                         ? 'text-gray-500 hover:!text-red-500'
+        //                         : 'hover:!text-gray-500 !text-red-500'
+        //                 }
+        //                 onClick={() => showBlockModal(record)}
+        //             />
+        //             <Button
+        //                 type="text"
+        //                 icon={<MdOutlineDeleteOutline size={24} />}
+        //                 className={'text-red-400 hover:!text-red-500'}
+        //                 onClick={() => showBlockModal(record)}
+        //             />
+        //         </div>
+        //     ),
+        // },
     ];
 
     return (
         <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-4">
+                <StatCard icon={<BsHouseLock />} title="Total Lockers" value="68" />
+                <StatCard icon={<GiKeyring />} title="Active Keys" value="169" />
+                <StatCard icon={<PiUsersThree />} title="Total Users" value="3,802" />
+                <StatCard icon={<GiMoneyStack />} title="Monthly Revenue" value="AED 45,085" />
+            </div>
             <div className="rounded-lg shadow-sm border border-gray-200 p-4">
                 <div className="flex items-center justify-between mb-4">
                     <HeaderTitle title="Customers" />
@@ -331,7 +251,7 @@ export default function Users({ dashboard }: { dashboard?: boolean }) {
                     <Table
                         columns={columns}
                         dataSource={userData}
-                        pagination={dashboard ? false : { pageSize: 9, total: userData.length }}
+                        pagination={dashboard ? false : { pageSize: 8, total: userData.length }}
                         className="custom-table"
                     />
                 </ConfigProvider>
