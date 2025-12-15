@@ -8,8 +8,9 @@ export default function DashboardHeader() {
                 <div className="flex items-center justify-between gap-4">
                     {/* Left section - Greeting */}
                     <Link to="/">
-                        <div className="flex flex-col gap-3 items-center justify-center pl-24">
-                            <img src="/logo.svg" alt="" className="h-20" />
+                        <div className="flex flex-col gap-1 items-center justify-center pl-24 py-2">
+                            <img src="/logo.png" alt="" className="h-12" />
+                            <h1 className='text-[#223047] text-xl font-medium'>KeyBank <span className='text-[#C9961B]'>MENA</span></h1>
                         </div>
                     </Link>
 
