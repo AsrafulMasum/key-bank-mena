@@ -6,10 +6,9 @@ import { CiCircleInfo } from 'react-icons/ci';
 import { useState } from 'react';
 import OrderDetailsModal from '../../../components/modals/OrderDetailsModal';
 import { StatCard } from '../dashboard';
-import { BsHouseLock } from 'react-icons/bs';
-import { GiKeyring, GiMoneyStack } from 'react-icons/gi';
-import TotalEarning from '../dashboard/TotalEarning';
-import TotalUserChart from '../dashboard/TotalUserChart';
+import { GiKeyring, GiMoneyStack, GiTakeMyMoney } from 'react-icons/gi';
+import TotalRevenueChart from './TotalRevenueChart';
+import SubscriptionPlansChart from './SubscriptionPlansChart';
 
 const { Option } = Select;
 
@@ -207,8 +206,11 @@ const statusColorMap = {
     returned: { color: '#FF0000', bg: '#FFCCCC' },
 };
 
-export default function Orders({ dashboard }: { dashboard?: boolean }) {
+export default function Orders() {
     const [showOrderDetails, setShowOrderDetails] = useState<Order | null>(null);
+    const [showAll, setShowAll] = useState(false);
+
+    const filteredData = showAll ? data : data.slice(0, 4);
 
     const columns: ColumnType<Order>[] = [
         {
@@ -349,21 +351,42 @@ export default function Orders({ dashboard }: { dashboard?: boolean }) {
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 mb-4">
-                <StatCard icon={<BsHouseLock />} title="Total Lockers" value="68" />
-                <StatCard icon={<GiKeyring />} title="Active Keys" value="169" />
-                <StatCard icon={<GiMoneyStack />} title="Monthly Revenue" value="AED 45,085" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                {/* Revenue Chart */}
-                <TotalEarning />
+            {!showAll && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 mb-4">
+                    <StatCard
+                        icon={<GiMoneyStack />}
+                        title="Monthly Revenue"
+                        value="AED 45,085"
+                        className="bg-[#9810FA1A] text-[#9810FA]"
+                    />
+                    <StatCard
+                        icon={<GiTakeMyMoney />}
+                        title="Subscriptions"
+                        value="AED 45,085"
+                        className="bg-[#00A63E1A] text-[#00A63E]"
+                    />
+                    <StatCard
+                        icon={<GiKeyring />}
+                        title="Active Subscriptions"
+                        value="169"
+                        className="bg-[#095CC71A] text-[#095CC7]"
+                    />
+                </div>
+            )}
 
-                {/* Users */}
-                <TotalUserChart />
-            </div>
+            {!showAll && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    {/* Revenue Chart */}
+                    <TotalRevenueChart />
+
+                    {/* Users */}
+                    <SubscriptionPlansChart />
+                </div>
+            )}
+
             <div className="rounded-lg shadow-sm border border-gray-200 p-4">
                 <div className="flex items-center justify-between mb-4">
-                    <HeaderTitle title="Bookings" />
+                    <HeaderTitle title="All Transactions" />
                     <ConfigProvider
                         theme={{
                             token: {
@@ -371,14 +394,21 @@ export default function Orders({ dashboard }: { dashboard?: boolean }) {
                             },
                         }}
                     >
-                        <Input
-                            placeholder="Search"
-                            className=""
-                            style={{ width: 280, height: 40 }}
-                            prefix={<i className="bi bi-search"></i>}
-                        />
+                        {showAll ? (
+                            <Input
+                                placeholder="Search"
+                                className=""
+                                style={{ width: 280, height: 40 }}
+                                prefix={<i className="bi bi-search"></i>}
+                            />
+                        ) : (
+                            <button className="text-[#C9961B] underline text-sm" onClick={() => setShowAll(true)}>
+                                View All
+                            </button>
+                        )}
                     </ConfigProvider>
                 </div>
+
                 <ConfigProvider
                     theme={{
                         token: {
@@ -388,8 +418,9 @@ export default function Orders({ dashboard }: { dashboard?: boolean }) {
                 >
                     <Table
                         columns={columns}
-                        dataSource={data as any}
-                        pagination={dashboard ? false : { pageSize: 5, total: data.length }}
+                        dataSource={filteredData as any}
+                        
+                        pagination={showAll ? { pageSize: 9, total: data.length } : false}
                         className="custom-table"
                     />
                 </ConfigProvider>
