@@ -127,6 +127,7 @@ export default function Organizers({ dashboard }: { dashboard?: boolean }) {
     const [isBlockModalVisible, setIsBlockModalVisible] = useState<boolean>(false);
     const [userToBlock, setUserToBlock] = useState<User | null>(null);
     const [openAddModal, setOpenAddModal] = useState<boolean>(false);
+    console.log(openAddModal)
 
     const showUserDetails = (user: User) => {
         setSelectedUser(user);

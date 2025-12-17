@@ -1,4 +1,3 @@
-'use client';
 
 import { useState } from 'react';
 import { Button, ConfigProvider, Input, Select, Table, Tabs } from 'antd';

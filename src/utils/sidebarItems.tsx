@@ -1,9 +1,8 @@
-import { BsPatchQuestion } from 'react-icons/bs';
+
 import { TSidebarItem } from './generateSidebarItems';
 import { LuClipboardList, LuLayoutDashboard} from 'react-icons/lu';
 import { TbBook } from 'react-icons/tb';
 import { IoSettingsOutline } from 'react-icons/io5';
-import { FaRegCircleQuestion } from 'react-icons/fa6';
 import { GiKeyring, GiMoneyStack } from 'react-icons/gi';
 import { PiUserGear, PiUsers } from 'react-icons/pi';
 import { LiaCcMastercard } from 'react-icons/lia';
