@@ -1,4 +1,4 @@
-import { Button, ConfigProvider, Input, Table } from 'antd';
+import { Button, ConfigProvider, Form, Input, Modal, Select, Table } from 'antd';
 import { useState } from 'react';
 import HeaderTitle from '../../../components/shared/HeaderTitle';
 import { CiCircleInfo } from 'react-icons/ci';
@@ -7,6 +7,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import { User } from '../../../types/types';
 import UserModal from '../users/UserModal';
 import BlockModal from '../users/BlockModal';
+
+const { Option } = Select;
 
 const userData: User[] = [
     { key: '1', serialId: 'S-001', userName: 'John Doe', email: 'john.doe@example.com', role: 'Engineer' },
@@ -57,7 +59,6 @@ export default function Organizers({ dashboard }: { dashboard?: boolean }) {
     const [isBlockModalVisible, setIsBlockModalVisible] = useState<boolean>(false);
     const [userToBlock, setUserToBlock] = useState<User | null>(null);
     const [openAddModal, setOpenAddModal] = useState<boolean>(false);
-    console.log(openAddModal);
 
     const showUserDetails = (user: User) => {
         setSelectedUser(user);
@@ -84,6 +85,14 @@ export default function Organizers({ dashboard }: { dashboard?: boolean }) {
     const handleBlockCancel = () => {
         setIsBlockModalVisible(false);
         setUserToBlock(null);
+    };
+
+    const onSubmit = () => {
+        setOpenAddModal(false);
+    };
+
+    const onClose = () => {
+        setOpenAddModal(false);
     };
 
     const columns = [
@@ -133,6 +142,8 @@ export default function Organizers({ dashboard }: { dashboard?: boolean }) {
         },
     ];
 
+    const [form] = Form.useForm();
+
     return (
         <>
             <div className="rounded-lg shadow-sm border border-gray-200 p-4">
@@ -180,6 +191,121 @@ export default function Organizers({ dashboard }: { dashboard?: boolean }) {
                 handleModalClose={handleModalClose}
                 selectedUser={selectedUser}
             />
+
+            <ConfigProvider theme={{ token: { colorPrimary: '#C9961B' } }}>
+                <Modal
+                    open={openAddModal}
+                    onCancel={onClose}
+                    footer={false}
+                    centered
+                    width={450}
+                    style={{
+                        backgroundColor: 'white',
+                        borderRadius: 12,
+                    }}
+                >
+                    <h3 className="text-lg font-semibold mb-4">Add Admin</h3>
+                    <Form form={form} onFinish={onSubmit} layout="vertical">
+                        <Form.Item
+                            name="name"
+                            label="Name"
+                            rules={[{ required: true, message: 'Please enter a name' }]}
+                        >
+                            <Input
+                                className="h-12"
+                                placeholder="Name"
+                                style={{
+                                    backgroundColor: '#FBFBFB',
+                                    border: 'none',
+                                    boxShadow: '0 0 1px 0 rgba(0, 0, 0, 0.14)',
+                                }}
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="email"
+                            label="Email"
+                            rules={[
+                                { required: true, message: 'Please enter an email' },
+                                { type: 'email', message: 'Please enter a valid email address' },
+                            ]}
+                        >
+                            <Input
+                                className="h-12"
+                                placeholder="Email"
+                                style={{
+                                    backgroundColor: '#FBFBFB',
+                                    border: 'none',
+                                    boxShadow: '0 0 1px 0 rgba(0, 0, 0, 0.14)',
+                                }}
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="password"
+                            label="password"
+                            rules={[{ required: true, message: 'Please enter a password' }]}
+                        >
+                            <Input.Password
+                                className="h-12"
+                                placeholder="********"
+                                style={{
+                                    backgroundColor: '#FBFBFB',
+                                    border: 'none',
+                                    boxShadow: '0 0 1px 0 rgba(0, 0, 0, 0.14)',
+                                }}
+                            />
+                        </Form.Item>
+
+                        {/* Role */}
+                        <Form.Item
+                            name="role"
+                            label="Role"
+                            rules={[{ required: true, message: 'Please select a role' }]}
+                        >
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        colorBorder: '#FFF',
+                                    },
+                                    components: {
+                                        Select: {
+                                            clearBg: '#FBFBFB',
+                                            selectorBg: '#FBFBFB',
+                                        },
+                                    },
+                                }}
+                            >
+                                <Select
+                                    className="h-12 !border-0"
+                                    placeholder="Select role"
+                                    style={{
+                                        backgroundColor: '#FBFBFB',
+                                        border: 'none',
+                                        boxShadow: '0 0 1px 0 rgba(0, 0, 0, 0.14)',
+                                    }}
+                                >
+                                    <Option value="Supervisor">Supervisor</Option>
+                                    <Option value="Manager">Manager</Option>
+                                    <Option value="Engineer">Engineer</Option>
+                                    <Option value="Technician">Technician</Option>
+                                    <Option value="Accountant">Accountant</Option>
+                                </Select>
+                            </ConfigProvider>
+                        </Form.Item>
+
+                        <div className="flex items-center justify-between gap-10">
+                            <button onClick={onClose} className="text-[#272728] bg-white px-6 py-2 rounded-md border">
+                                Cancel
+                            </button>
+
+                            <button type="submit" className="bg-[#C9961B] text-[#FFF] px-8 py-2 rounded-md">
+                                Add Admin
+                            </button>
+                        </div>
+                    </Form>
+                </Modal>
+            </ConfigProvider>
 
             <BlockModal
                 isBlockModalVisible={isBlockModalVisible}

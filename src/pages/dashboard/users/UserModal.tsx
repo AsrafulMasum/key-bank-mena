@@ -1,6 +1,6 @@
 import {  Button, Descriptions, Modal, Tag } from 'antd'
 
-import { UserOutlined, MailOutlined, PhoneOutlined, CalendarOutlined } from '@ant-design/icons';
+import { UserOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 export default function UserModal({
     isModalVisible,
     handleModalClose,
@@ -22,6 +22,7 @@ export default function UserModal({
             </Button>,
           ]}
           width={600}
+          centered
         >
           {selectedUser && (
             <div className="py-4">
@@ -42,16 +43,9 @@ export default function UserModal({
                   {selectedUser.email}
                 </Descriptions.Item>
                 <Descriptions.Item 
-                  label={<span className="font-medium"><PhoneOutlined className="mr-2" />Contact Number</span>}
+                  label={<span className="font-medium"><PhoneOutlined className="mr-2" />Role</span>}
                 >
-                  {selectedUser.contactNumber}
-                </Descriptions.Item>
-                <Descriptions.Item 
-                  label={<span className="font-medium"><CalendarOutlined className="mr-2" />Subscription</span>}
-                >
-                  <Tag color={selectedUser.subscription === 'Yearly' ? 'green' : 'orange'}>
-                    {selectedUser.subscription}
-                  </Tag>
+                  {selectedUser.role}
                 </Descriptions.Item>
               </Descriptions>
             </div>
