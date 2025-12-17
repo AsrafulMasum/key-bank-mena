@@ -15,7 +15,7 @@ const MainLayout: React.FC = () => {
             </div>
 
             {/* main container with header */}
-            <div className="col-span-10 bg-[#FFFDFB]">
+            <div className="col-span-10 bg-[#FFF]">
                 <div className="px-4 h-[calc(100vh-97px)]">
                     <div className="h-full overflow-y-auto rounded-md pt-4">
                         <Outlet />

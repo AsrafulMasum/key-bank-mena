@@ -6,6 +6,8 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { GiKeyring, GiMoneyStack } from 'react-icons/gi';
 import { PiUserGear, PiUsers } from 'react-icons/pi';
 import { LiaCcMastercard } from 'react-icons/lia';
+import { LucideUserRound } from 'lucide-react';
+import { CgLock } from 'react-icons/cg';
 
 const sidebarItems: TSidebarItem[] = [
     {
@@ -62,12 +64,18 @@ const sidebarItems: TSidebarItem[] = [
         path: 'settings',
         icon: <IoSettingsOutline size={24} />,
         children: [
-            // {
-            //     key: 'faq',
-            //     label: 'FAQs',
-            //     path: 'faq',
-            //     icon: <FaRegCircleQuestion size={20} />,
-            // },
+            {
+                key: 'changePassword',
+                label: 'Change Password',
+                path: 'changePassword',
+                icon: <CgLock size={20} />,
+            },
+            {
+                key: 'adminProfile',
+                label: 'Profile',
+                path: 'adminProfile',
+                icon: <LucideUserRound size={20} />,
+            },
             {
                 key: 'about-us',
                 label: 'About us',

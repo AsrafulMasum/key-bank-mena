@@ -12,15 +12,13 @@ import Profile from '../pages/dashboard/profile';
 import Notification from '../pages/dashboard/notification';
 import PrivacyPolicy from '../pages/dashboard/privacy-policy';
 import Orders from '../pages/dashboard/orders';
-import Drivers from '../pages/dashboard/drivers';
 import Chefs from '../pages/dashboard/chefs';
 import AboutUs from '../pages/dashboard/about-us';
-import Disclaimer from '../pages/dashboard/disclaimer';
-import Category from '../pages/dashboard/category';
 import Transactions from '../pages/dashboard/transactions';
 import AppSliderList from '../pages/dashboard/banners';
-import FAQ from '../pages/dashboard/faq';
 import Subscription from '../pages/dashboard/package';
+import AdminProfile from '../pages/dashboard/admin-profile';
+import ChangePassword from '../pages/dashboard/change-password';
 
 const router = createBrowserRouter([
     {
@@ -31,19 +29,17 @@ const router = createBrowserRouter([
             { path: '', element: <Dashboard /> },
             { path: 'orders', element: <Orders /> },
             { path: 'banners', element: <AppSliderList /> },
-            { path: 'categories', element: <Category /> },
             { path: 'chefs', element: <Chefs /> },
             { path: 'users', element: <Users /> },
-            { path: 'drivers', element: <Drivers /> },
             { path: 'transactions', element: <Transactions /> },
             { path: 'subscriptions', element: <Subscription /> },
             { path: 'profile', element: <Profile /> },
+            { path: 'adminProfile', element: <AdminProfile /> },
+            { path: 'changePassword', element: <ChangePassword /> },
             { path: 'notification', element: <Notification /> },
             { path: 'privacy-policy', element: <PrivacyPolicy /> },
             { path: 'terms-and-condition', element: <TermsAndCondition /> },
             { path: 'about-us', element: <AboutUs /> },
-            { path: 'disclaimer', element: <Disclaimer /> },
-            { path: 'faq', element: <FAQ /> },
         ],
     },
     { path: '/login', element: <Login /> },
