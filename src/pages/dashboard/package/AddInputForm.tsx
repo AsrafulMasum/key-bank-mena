@@ -37,19 +37,19 @@ const AddInputForm: React.FC<AddInputFormProps> = ({
     >
       <Form form={form} onFinish={onFinish} layout="vertical">
         <Form.Item name="name" label="Package Name" rules={[{ required: true }]}>
-          <Input />
+          <Input className="h-12" />
         </Form.Item>
 
         <Form.Item
           name="duration"
-          label="Package Duration"
+          label="Package Type"
           rules={[{ required: true }]}
         >
-          <Input />
+          <Input className="h-12" />
         </Form.Item>
 
         <Form.Item name="price" label="Price" rules={[{ required: true }]}>
-          <Input type="number" />
+          <Input type="number" className="h-12 mb-2" />
         </Form.Item>
 
         {/* Dynamic Fields */}
@@ -63,7 +63,7 @@ const AddInputForm: React.FC<AddInputFormProps> = ({
                     rules={[{ required: true, message: "Enter feature" }]}
                     className="flex-1"
                   >
-                    <Input placeholder="Feature" />
+                    <Input placeholder="Feature" className="h-12" />
                   </Form.Item>
 
                   <MinusCircleOutlined
@@ -77,7 +77,7 @@ const AddInputForm: React.FC<AddInputFormProps> = ({
                 type="dashed"
                 onClick={() => add()}
                 icon={<PlusOutlined />}
-                style={{ width: "100%" }}
+                style={{ width: "100%", height: "48px" }}
               >
                 Add Feature
               </Button>
@@ -88,10 +88,10 @@ const AddInputForm: React.FC<AddInputFormProps> = ({
         <Button
           type="primary"
           htmlType="submit"
-          className="w-full mt-5 h-11"
+          className="w-full mt-5 h-12"
           style={{ backgroundColor: "#C9961B" }}
         >
-          Submit
+          Add Plan
         </Button>
       </Form>
     </ConfigProvider>

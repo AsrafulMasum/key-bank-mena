@@ -41,15 +41,15 @@ const EditInputForm: React.FC<EditProps> = ({ packageData, setOpenEditModal, han
         >
             <Form form={form} onFinish={onFinish} layout="vertical">
                 <Form.Item name="name" label="Package Name" rules={[{ required: true }]}>
-                    <Input />
+                    <Input className="h-12" />
                 </Form.Item>
 
-                <Form.Item name="duration" label="Duration" rules={[{ required: true }]}>
-                    <Input />
+                <Form.Item name="duration" label="Package Type" rules={[{ required: true }]}>
+                    <Input className="h-12" />
                 </Form.Item>
 
                 <Form.Item name="price" label="Price" rules={[{ required: true }]}>
-                    <Input type="number" />
+                    <Input type="number"  className="h-12 mb-2"/>
                 </Form.Item>
 
                 {/* Dynamic Feature Fields */}
@@ -63,7 +63,7 @@ const EditInputForm: React.FC<EditProps> = ({ packageData, setOpenEditModal, han
                                         className="flex-1"
                                         rules={[{ required: true, message: 'Enter feature' }]}
                                     >
-                                        <Input placeholder="Feature" />
+                                        <Input placeholder="Feature"  className="h-12"/>
                                     </Form.Item>
 
                                     <MinusCircleOutlined className="text-red-600" onClick={() => remove(field.name)} />
@@ -74,7 +74,7 @@ const EditInputForm: React.FC<EditProps> = ({ packageData, setOpenEditModal, han
                                 type="dashed"
                                 onClick={() => add()}
                                 icon={<PlusOutlined />}
-                                style={{ width: '100%' }}
+                                style={{ width: '100%', height: '48px' }}
                             >
                                 Add Feature
                             </Button>

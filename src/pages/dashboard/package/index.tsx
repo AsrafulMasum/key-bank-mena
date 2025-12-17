@@ -5,6 +5,7 @@ import { IoCheckmarkCircle } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md';
 import AddInputForm from './AddInputForm';
 import EditInputForm from './EditInputForm';
+import HeaderTitle from '../../../components/shared/HeaderTitle';
 
 export interface SubscriptionType {
     id: string;
@@ -24,16 +25,23 @@ const Subscription = () => {
     const [packages, setPackages] = useState<SubscriptionType[]>([
         {
             id: '1',
-            name: 'Basic',
-            duration: '1 Month',
+            name: 'Weekly',
+            duration: '1 Week',
             price: 19,
             features: ['Access to basic courses', 'Limited community support'],
         },
         {
             id: '2',
-            name: 'Premium',
-            duration: '3 Months',
+            name: 'Monthly',
+            duration: '1 Months',
             price: 49,
+            features: ['Everything in Basic', 'Priority support', 'Access to premium lessons'],
+        },
+        {
+            id: '3',
+            name: 'Annually',
+            duration: '12 Months',
+            price: 79,
             features: ['Everything in Basic', 'Priority support', 'Access to premium lessons'],
         },
     ]);
@@ -59,24 +67,28 @@ const Subscription = () => {
         <div className="bg-[#FFF] pt-4 px-4">
             {/* Header */}
             <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-semibold text-{#757575}">Subscriptions</h2>
+                {/* <h2 className="text-2xl font-semibold text-{#757575}">Subscription Plans</h2> */}
+                <HeaderTitle title="Subscription Plans" />
 
                 <Button
                     onClick={() => setOpenAddModal(true)}
                     style={{
-                        width: 200,
+                        // width: 200,
                         height: 40,
-                        backgroundColor: '#A67B5B',
+                        backgroundColor: '#02002A',
                         border: 'none',
                         color: '#fff',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        fontSize: 14,
                         gap: 8,
+                        paddingLeft: 12,
+                        paddingRight: 16,
                     }}
                 >
                     <PlusOutlined />
-                    Create Subscription
+                    Add Subscription
                 </Button>
             </div>
 
@@ -85,10 +97,13 @@ const Subscription = () => {
                 {packages.map((pkg) => (
                     <div
                         key={pkg.id}
-                        className="max-w-[320px] bg-[#F4F4F4] py-4 px-6 border border-[#C9961B] rounded-lg"
+                        className="min-w-[320px] !min-h-[315px] bg-[#FBFBFB] p-4 rounded-lg flex flex-col"
+                        style={{
+                            boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.14)',
+                        }}
                     >
                         {/* Delete Button */}
-                        <div className="flex justify-end py-2">
+                        {/* <div className="flex justify-end py-2">
                             <div
                                 className="cursor-pointer bg-[#C9961B] p-2 rounded-full"
                                 onClick={() => {
@@ -98,46 +113,61 @@ const Subscription = () => {
                             >
                                 <MdDeleteOutline className="text-xl text-white" />
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Title */}
-                        <h4 className="text-xl font-medium text-center pb-2">Get {pkg.name}</h4>
+                        <h4 className="text-[#1A1E25]">Get {pkg.name}</h4>
 
                         {/* Price */}
-                        <h4 className="text-center pb-3">
-                            <span className="text-4xl font-semibold">${pkg.price}</span> / per {pkg.duration}
+                        <h4 className="my-5">
+                            <span className="text-3xl text-primary font-semibold">
+                                ${pkg.price} <span className="text-[#1A1E25]">/</span>
+                            </span>{' '}
+                            AED
                         </h4>
 
                         {/* Features */}
-                        <div className="space-y-3">
+                        <div className="space-y-3 flex-1">
                             {pkg.features.map((feature, idx) => (
                                 <div className="flex gap-2" key={idx}>
-                                    <IoCheckmarkCircle className="text-green-600 min-w-[24px]" />
+                                    <IoCheckmarkCircle className="text-[#353355] size-5" />
                                     <p className="text-sm">{feature}</p>
                                 </div>
                             ))}
                         </div>
 
                         {/* Edit Button */}
-                        <button
-                            onClick={() => {
-                                setEditPackage(pkg);
-                                setOpenEditModal(true);
-                            }}
-                            style={{
-                                width: '100%',
-                                height: '40px',
-                                marginTop: '20px',
-                                backgroundColor: '#C9961B',
-                                color: 'white',
-                                fontWeight: 500,
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            Edit Package
-                        </button>
+                        <div className="flex items-center gap-5 pt-5">
+                            <button
+                                className="cursor-pointer bg-[#F1F1F1] pl-4 pr-6 py-3 rounded text-[#FD3D32] flex items-center gap-2"
+                                onClick={() => {
+                                    setDeleteId(pkg.id);
+                                    setShowDelete(true);
+                                }}
+                            >
+                                <MdDeleteOutline className="text-xl" />
+                                <span>Delete</span>
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setEditPackage(pkg);
+                                    setOpenEditModal(true);
+                                }}
+                                className="w-full bg-[#C9961B] text-white rounded-md text-lg font-medium px-4 py-3"
+                                // style={{
+                                //     width: '100%',
+                                //     height: '40px',
+                                //     backgroundColor: '#C9961B',
+                                //     color: 'white',
+                                //     fontWeight: 500,
+                                //     border: 'none',
+                                //     borderRadius: '4px',
+                                //     cursor: 'pointer',
+                                // }}
+                            >
+                                Edit Package
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>
@@ -153,13 +183,20 @@ const Subscription = () => {
             </Modal>
 
             {/* Delete Modal */}
-            <Modal centered open={showDelete} onCancel={() => setShowDelete(false)} footer={false}>
-                <div className="p-6 text-center">
-                    <p className="text-red-600 font-semibold text-lg">Are you sure?</p>
-                    <p className="py-4 text-gray-700">Do you want to delete this package?</p>
-                    <button onClick={handleDelete} className="bg-[#C9961B] text-white px-6 py-2 rounded-md">
-                        Confirm
-                    </button>
+            <Modal width={350} centered open={showDelete} onCancel={() => setShowDelete(false)} footer={false}>
+                <div className="p-4 text-center">
+                    <p className="text-[#272728] text-xl">Are you sure?</p>
+                    <p className="pt-4 pb-10 text-[#898888]">
+                        Do you really want to delete these records? This process cannot be undone.
+                    </p>
+                    <div className="flex items-center justify-between">
+                        <button onClick={handleDelete} className="text-[#272728] bg-white px-6 py-2 rounded-md border">
+                            Cancel
+                        </button>
+                        <button onClick={handleDelete} className="bg-[#EA545526] text-[#EA5455] px-6 py-2 rounded-md">
+                            Delete
+                        </button>
+                    </div>
                 </div>
             </Modal>
         </div>
