@@ -123,12 +123,9 @@ export interface User {
     key: string;
     serialId: string;
     userName: string;
-    email: string;
     address: string;
-    city: string;
-    createdAt: string;
-    country: string;
-    status: 'active' | 'inactive';
+    userType: String;
+    status: 'Active' | 'Inactive';
 }
 
 export interface DriverTypes {
