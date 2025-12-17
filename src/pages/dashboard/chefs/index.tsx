@@ -193,9 +193,9 @@ export default function Organizers({ dashboard }: { dashboard?: boolean }) {
 
                     <Button
                         type="text"
-                        icon={record?.status == 'active' ? <CiLock size={24} /> : <CiUnlock size={24} />}
+                        icon={record?.status == 'Active' ? <CiLock size={24} /> : <CiUnlock size={24} />}
                         className={
-                            record?.status == 'active'
+                            record?.status == 'Active'
                                 ? 'text-gray-500 hover:!text-red-500'
                                 : 'hover:!text-gray-500 !text-red-500'
                         }
@@ -258,7 +258,7 @@ export default function Organizers({ dashboard }: { dashboard?: boolean }) {
                 isBlockModalVisible={isBlockModalVisible}
                 handleBlockCancel={handleBlockCancel}
                 handleBlockConfirm={handleBlockConfirm}
-                isUserBlocked={userToBlock?.status !== 'active'}
+                isUserBlocked={userToBlock?.status !== 'Active'}
             />
         </>
     );

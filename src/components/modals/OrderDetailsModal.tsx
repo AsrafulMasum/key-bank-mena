@@ -1,5 +1,4 @@
 import { Modal } from 'antd';
-import { imageUrl } from '../../redux/api/baseApi';
 import { IoCalendarOutline } from 'react-icons/io5';
 import { CiUser } from 'react-icons/ci';
 
@@ -73,37 +72,13 @@ const OrderDetailsModal = ({
                     </div>
                 </div>
 
-                <div className="mt-10">
+                <div className="my-10">
                     <h4 className="text-[#60A548] text-xl font-semibold">Payment Info</h4>
                     <div className="flex items-center gap-2 mt-4">
                         <img className="py-1 px-1.5 border rounded" src="/card.svg" alt="" />
                         <p className="text-[#5C5C5C] text-lg font-semibold">
                             Master Card -- {showOrderDetails?.cardNumber || '**** **** **** 4242'}
                         </p>
-                    </div>
-                </div>
-
-                <div className="mb-6">
-                    <h4 className="text-[#60A548] text-xl font-semibold mt-10">Product Images</h4>
-                    <div className="flex items-center justify-between mt-4">
-                        <div className="flex gap-2">
-                            {showOrderDetails?.productImage && (
-                                <img
-                                    src={
-                                        showOrderDetails?.productImage &&
-                                        showOrderDetails?.productImage.startsWith('http')
-                                            ? showOrderDetails?.productImage
-                                            : showOrderDetails?.productImage
-                                            ? `${imageUrl}${showOrderDetails?.productImage}`
-                                            : '/default-avatar.jpg'
-                                    }
-                                    alt={`Product ${showOrderDetails?.productName || 'Image'}`}
-                                    className="w-10 h-10 object-cover rounded border border-[#3F857B]"
-                                />
-                            )}
-                        </div>
-                        <p className="text-lg text-[#5C5C5C] font-semibold">{showOrderDetails?.itemCount || '2'}</p>
-                        <p className="text-lg text-[#5C5C5C] font-semibold">$ {showOrderDetails?.price || '106'}</p>
                     </div>
                 </div>
 

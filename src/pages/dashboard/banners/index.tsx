@@ -1,15 +1,16 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Card, ConfigProvider, Input, Modal, Select, Table } from 'antd';
+import { Button, Card, ConfigProvider, Descriptions, Form, Input, Modal, Select, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { useState } from 'react';
-import { FiSearch } from 'react-icons/fi';
+import { useEffect, useState } from 'react';
+import { FiEdit, FiSearch } from 'react-icons/fi';
 import { StatCard } from '../dashboard';
 import { BsHouseLock } from 'react-icons/bs';
-import { GiKeyring, GiMoneyStack } from 'react-icons/gi';
-import { PiUsersThree } from 'react-icons/pi';
+import { GiKeyring, GiSandsOfTime } from 'react-icons/gi';
 import { LockerType } from '../../../types/types';
-import { FaRegEdit } from 'react-icons/fa';
-import { AiOutlineDelete, AiOutlineEye } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineExclamationCircle, AiOutlineEye } from 'react-icons/ai';
+import { CiLocationOn, CiSettings } from 'react-icons/ci';
+import { GoNumber } from 'react-icons/go';
+import { PiLockers } from 'react-icons/pi';
 
 // ---------------- Dummy Data -------------------
 const lockerData: LockerType[] = [
@@ -192,12 +193,18 @@ const AppSliderList: React.FC = () => {
     const [openEditModal, setOpenEditModal] = useState<boolean>(false);
     const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
     const [selectedStatus, setSelectedStatus] = useState<string>('');
+    console.log(selectedStatus);
 
-    const [editData, setEditData] = useState<LockerType | null>(null);
+    const [editData, setEditData] = useState<LockerType | undefined>(undefined);
+    const [viewData, setViewData] = useState<LockerType | undefined>(undefined);
     const [deleteId, setDeleteId] = useState<string>('');
 
     // ---------------- Search -----------------------
     const filteredData = banners.filter((x) => x.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    const handleModalClose = () => {
+        setViewData(undefined);
+    };
 
     // ---------------- Delete -----------------------
     const handleDelete = () => {
@@ -287,11 +294,10 @@ const AppSliderList: React.FC = () => {
             key: 'action',
             align: 'right',
             render: (_, record) => (
-                <div className="flex justify-end gap-2.5 py-1.5">
+                <div className="flex justify-end gap-5 py-1.5">
                     <button
                         onClick={() => {
-                            setDeleteId(record.lockerID);
-                            setOpenDeleteModal(true);
+                            setViewData(record);
                         }}
                     >
                         <AiOutlineEye size={24} className="text-secondary" />
@@ -302,7 +308,7 @@ const AppSliderList: React.FC = () => {
                             setOpenEditModal(true);
                         }}
                     >
-                        <FaRegEdit size={24} className="text-secondary" />
+                        <FiEdit size={24} className="text-secondary" />
                     </button>
 
                     <button
@@ -322,10 +328,30 @@ const AppSliderList: React.FC = () => {
         <div className="h-full">
             <div style={{ background: '#FFFFFF', borderRadius: '12px' }}>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-4">
-                    <StatCard icon={<BsHouseLock />} title="Total Lockers" value="68" />
-                    <StatCard icon={<GiKeyring />} title="Active Keys" value="169" />
-                    <StatCard icon={<PiUsersThree />} title="Total Users" value="3,802" />
-                    <StatCard icon={<GiMoneyStack />} title="Monthly Revenue" value="AED 45,085" />
+                    <StatCard
+                        icon={<BsHouseLock />}
+                        title="Total Lockers"
+                        value="68"
+                        className="bg-[#095CC71A] text-[#095CC7]"
+                    />
+                    <StatCard
+                        icon={<GiKeyring />}
+                        title="Active Keys"
+                        value="169"
+                        className="bg-[#00A63E1A] text-[#00A63E]"
+                    />
+                    <StatCard
+                        icon={<AiOutlineExclamationCircle />}
+                        title="Maintenance"
+                        value="3"
+                        className="bg-[#C9961B1A] text-[#C9961B]"
+                    />
+                    <StatCard
+                        icon={<CiSettings />}
+                        title="Any occupancy"
+                        value="45%"
+                        className="bg-[#9810FA1A] text-[#9810FA]"
+                    />
                 </div>
                 <Card className="shadow-sm">
                     {/* Header */}
@@ -394,8 +420,7 @@ const AppSliderList: React.FC = () => {
                 open={openAddModal}
                 onClose={() => setOpenAddModal(false)}
                 onSubmit={handleAddBanner}
-                title="Add Banner"
-                defaultName=""
+                title="Add Locker"
             />
 
             {/* ---------------- Edit Modal ---------------- */}
@@ -403,9 +428,89 @@ const AppSliderList: React.FC = () => {
                 open={openEditModal}
                 onClose={() => setOpenEditModal(false)}
                 onSubmit={handleEditBanner}
-                title="Edit Banner"
-                defaultName={editData?.name || ''}
+                lockerData={editData}
+                title="Edit Locker"
             />
+
+            <Modal
+                title={<span className="text-lg font-semibold">User Details</span>}
+                open={viewData !== null && viewData !== undefined}
+                onCancel={handleModalClose}
+                footer={[
+                    <Button key="close" onClick={handleModalClose}>
+                        Close
+                    </Button>,
+                ]}
+                width={600}
+            >
+                {viewData && (
+                    <div className="py-4">
+                        <Descriptions bordered column={1} size="middle">
+                            <Descriptions.Item
+                                label={
+                                    <span className="font-medium flex items-center">
+                                        <GoNumber className="mr-2 size-5" />
+                                        Locker ID
+                                    </span>
+                                }
+                            >
+                                <Tag color="blue">{viewData.lockerID}</Tag>
+                            </Descriptions.Item>
+                            <Descriptions.Item
+                                label={
+                                    <span className="font-medium flex items-center">
+                                        <GiKeyring className="mr-2 size-5" />
+                                        Locker Name
+                                    </span>
+                                }
+                            >
+                                {viewData.name}
+                            </Descriptions.Item>
+                            <Descriptions.Item
+                                label={
+                                    <span className="font-medium flex items-center">
+                                        <CiLocationOn className="mr-2 size-5" />
+                                        Locker Location
+                                    </span>
+                                }
+                            >
+                                {viewData.lockerLocation}
+                            </Descriptions.Item>
+                            <Descriptions.Item
+                                label={
+                                    <span className="font-medium flex items-center">
+                                        <PiLockers className="mr-2 size-5" />
+                                        Capacity
+                                    </span>
+                                }
+                            >
+                                {viewData.capacity}
+                            </Descriptions.Item>
+                            <Descriptions.Item
+                                label={
+                                    <span className="font-medium flex items-center">
+                                        <GiSandsOfTime className="mr-2 size-5" />
+                                        Status
+                                    </span>
+                                }
+                            >
+                                <Tag
+                                    color={
+                                        viewData.deliveryStatus === 'active'
+                                            ? 'green'
+                                            : viewData.deliveryStatus === 'maintenance'
+                                            ? 'orange'
+                                            : 'red'
+                                    }
+                                    className="capitalize"
+                                >
+                                    {viewData.deliveryStatus}
+                                </Tag>
+                            </Descriptions.Item>
+                        </Descriptions>
+                    </div>
+                )}
+            </Modal>
 
             {/* ---------------- Delete Modal ---------------- */}
             <Modal
@@ -415,13 +520,19 @@ const AppSliderList: React.FC = () => {
                 footer={false}
                 width={350}
             >
-                <div className="p-6 text-center">
-                    <p className="text-red-600 text-lg font-semibold">Are you sure?</p>
-                    <p className="mt-2 mb-8">Do you want to delete this banner?</p>
-
-                    <button onClick={handleDelete} className="bg-red-500 text-white px-6 py-2 rounded-md">
-                        Yes, Delete
-                    </button>
+                <div className="p-4 text-center">
+                    <p className="text-[#272728] text-xl">Are you sure?</p>
+                    <p className="pt-4 pb-10 text-[#898888]">
+                        Do you really want to delete these records? This process cannot be undone.
+                    </p>
+                    <div className="flex items-center justify-between">
+                        <button onClick={handleDelete} className="text-[#272728] bg-white px-6 py-2 rounded-md border">
+                            Cancel
+                        </button>
+                        <button onClick={handleDelete} className="bg-[#EA545526] text-[#EA5455] px-6 py-2 rounded-md">
+                            Delete
+                        </button>
+                    </div>
                 </div>
             </Modal>
         </div>
@@ -437,28 +548,92 @@ interface AddEditProps {
     open: boolean;
     onClose: () => void;
     onSubmit: (name: string) => void;
+    lockerData?: LockerType;
     title: string;
-    defaultName: string;
 }
 
-const AddOrEditModal: React.FC<AddEditProps> = ({ open, onClose, onSubmit, title, defaultName }) => {
-    const [name, setName] = useState<string>(defaultName);
+const AddOrEditModal: React.FC<AddEditProps> = ({ open, onClose, onSubmit, title, lockerData }) => {
+    const [form] = Form.useForm();
+    useEffect(() => {
+        form.setFieldsValue({ name: lockerData?.name || '' });
+        form.setFieldsValue({ lockerID: lockerData?.lockerID || '' });
+        form.setFieldsValue({ location: lockerData?.lockerLocation || '' });
+        form.setFieldsValue({ price: lockerData?.price || '100' });
+    }, [lockerData]);
 
     return (
         <ConfigProvider theme={{ token: { colorPrimary: '#C9961B' } }}>
-            <Modal open={open} onCancel={onClose} footer={false} centered width={450}>
-                <h2 className="text-lg font-semibold mb-4">{title}</h2>
+            <Modal
+                open={open}
+                onCancel={onClose}
+                footer={false}
+                centered
+                width={450}
+                style={{
+                    backgroundColor: 'white',
+                    borderRadius: 12,
+                }}
+            >
+                <h3 className="text-lg font-semibold mb-4">{title}</h3>
+                <Form form={form} onFinish={onSubmit} layout="vertical">
+                    <Form.Item name="name" label="Locker Name" rules={[{ required: true }]}>
+                        <Input
+                            className="h-12"
+                            placeholder="e.g.. locker name"
+                            style={{
+                                backgroundColor: '#FBFBFB',
+                                border: 'none',
+                                boxShadow: '0 0 1px 0 rgba(0, 0, 0, 0.14)',
+                            }}
+                        />
+                    </Form.Item>
 
-                <Input
-                    placeholder="Banner Title"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="mb-4 h-10"
-                />
+                    <Form.Item name="lockerID" label="Locker ID" rules={[{ required: true }]}>
+                        <Input
+                            className="h-12"
+                            placeholder="e.g.. locker id"
+                            style={{
+                                backgroundColor: '#FBFBFB',
+                                border: 'none',
+                                boxShadow: '0 0 1px 0 rgba(0, 0, 0, 0.14)',
+                            }}
+                        />
+                    </Form.Item>
 
-                <Button type="primary" onClick={() => onSubmit(name)} className="w-full h-10 mt-4">
-                    Submit
-                </Button>
+                    <Form.Item name="location" label="Location" rules={[{ required: true }]}>
+                        <Input
+                            className="h-12"
+                            placeholder="Enter location"
+                            style={{
+                                backgroundColor: '#FBFBFB',
+                                border: 'none',
+                                boxShadow: '0 0 1px 0 rgba(0, 0, 0, 0.14)',
+                            }}
+                        />
+                    </Form.Item>
+
+                    <Form.Item name="price" label="Price" rules={[{ required: true }]}>
+                        <Input
+                            type="number"
+                            className="h-12 mb-2"
+                            placeholder="$ 0.00"
+                            style={{
+                                backgroundColor: '#FBFBFB',
+                                border: 'none',
+                                boxShadow: '0 0 1px 0 rgba(0, 0, 0, 0.14)',
+                            }}
+                        />
+                    </Form.Item>
+
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="w-full mt-5 h-12"
+                        style={{ backgroundColor: '#C9961B' }}
+                    >
+                        Save
+                    </Button>
+                </Form>
             </Modal>
         </ConfigProvider>
     );

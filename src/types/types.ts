@@ -123,9 +123,13 @@ export interface User {
     key: string;
     serialId: string;
     userName: string;
+    email?: string;
+    city?: string;
+    country?: string;
+    createdAt?: string;
     address: string;
-    userType: String;
-    status: 'Active' | 'Inactive';
+    userType?: String;
+    status: 'Active' | 'Inactive' | String;
 }
 
 export interface DriverTypes {
@@ -229,6 +233,7 @@ export interface LockerType {
     name: string;
     lockerLocation: string;
     capacity: number;
+    price?: number;
     lastActivity: string;
     deliveryStatus: 'active' | 'maintenance' | 'offline';
 }
