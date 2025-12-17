@@ -399,18 +399,32 @@ const AppSliderList: React.FC = () => {
 
                     {/* Table */}
                     <div className="relative p-2">
-                        <Table
-                            size="large"
-                            columns={columns}
-                            rowKey="_id"
-                            dataSource={filteredData}
-                            pagination={{
-                                current: page,
-                                total: filteredData.length,
-                                pageSize: 7,
-                                onChange: (page) => setPage(page),
+                        <ConfigProvider
+                            theme={{
+                                token: {
+                                    colorPrimary: '#C9961B',
+                                },
+                                components: {
+                                    Table: {
+                                        headerBg: '#FAF5E8',
+                                        headerColor: '#C9961B',
+                                    },
+                                },
                             }}
-                        />
+                        >
+                            <Table
+                                size="large"
+                                columns={columns}
+                                rowKey="_id"
+                                dataSource={filteredData}
+                                pagination={{
+                                    current: page,
+                                    total: filteredData.length,
+                                    pageSize: 7,
+                                    onChange: (page) => setPage(page),
+                                }}
+                            />
+                        </ConfigProvider>
                     </div>
                 </Card>
             </div>

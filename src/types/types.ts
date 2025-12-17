@@ -121,15 +121,16 @@ export interface WaitingListTypes {
 
 export interface User {
     key: string;
-    serialId: string;
-    userName: string;
+    serialId?: string;
+    userName?: string;
     email?: string;
     city?: string;
     country?: string;
     createdAt?: string;
-    address: string;
+    address?: string;
     userType?: String;
-    status: 'Active' | 'Inactive' | String;
+    role?: String;
+    status?: 'Active' | 'Inactive' | String;
 }
 
 export interface DriverTypes {

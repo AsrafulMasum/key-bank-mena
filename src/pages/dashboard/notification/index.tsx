@@ -140,7 +140,7 @@ export default function NotificationPage() {
                   }`} />
 
                   {/* Avatar */}
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-green-200 flex-shrink-0 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-[#C9961B26] flex-shrink-0 flex items-center justify-center">
                     <span className="text-white text-sm font-semibold">{notif.avatar}</span>
                   </div>
 

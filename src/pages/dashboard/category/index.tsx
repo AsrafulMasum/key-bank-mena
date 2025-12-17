@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button, ConfigProvider, Select, Table, Tabs, message } from 'antd';
 import type { ColumnType } from 'antd/es/table';
@@ -275,6 +274,12 @@ export default function Category({ dashboard }: { dashboard?: boolean }) {
             <ConfigProvider
                 theme={{
                     token: { colorPrimary: '#C9961B' },
+                    components: {
+                        Table: {
+                            headerBg: '#FAF5E8',
+                            headerColor: '#C9961B',
+                        },
+                    },
                 }}
             >
                 <Tabs

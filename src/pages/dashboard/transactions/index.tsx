@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button, ConfigProvider, Input, Select, Table, Tabs } from 'antd';
 import type { ColumnType } from 'antd/es/table/interface';
@@ -542,7 +541,17 @@ export default function Transactions({ dashboard }: { dashboard?: boolean }) {
                 </ConfigProvider>
             </div>
 
-            <ConfigProvider theme={{ token: { colorPrimary: '#C9961B' } }}>
+            <ConfigProvider
+                theme={{
+                    token: { colorPrimary: '#C9961B' },
+                    components: {
+                        Table: {
+                            headerBg: '#FAF5E8',
+                            headerColor: '#C9961B',
+                        },
+                    },
+                }}
+            >
                 <Tabs
                     defaultActiveKey="chef"
                     onChange={(key) => setActiveTab(key as 'chef' | 'customer' | 'driver')}

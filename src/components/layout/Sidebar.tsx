@@ -55,12 +55,12 @@ const Sidebar = () => {
                             },
                             components: {
                                 Menu: {
-                                    itemActiveBg: '#C9961B26',
-                                    itemSelectedColor: '#C9961B',
+                                    itemActiveBg: '#C9961B',
+                                    itemSelectedColor: '#FFF',
                                     itemBorderRadius: '10px 10px 10px 10px' as any,
                                     itemHeight: 45,
                                     itemMarginBlock: 9,
-                                    itemSelectedBg: '#C9961B26',
+                                    itemSelectedBg: '#C9961B',
                                 },
                             },
                         }}
@@ -72,7 +72,7 @@ const Sidebar = () => {
                             openKeys={openKeys}
                             onOpenChange={handleOpenChange}
                             items={sidebarItemsGenerator(sidebarItems)}
-                            style={{ background: 'transparent' }}
+                            style={{ background: 'transparent', fontSize: '16px' }}
                         />
                     </ConfigProvider>
                 </div>

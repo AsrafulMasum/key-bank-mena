@@ -447,6 +447,12 @@ export default function Reviews({ dashboard }: { dashboard?: boolean }) {
                         token: {
                             colorPrimary: '#C9961B',
                         },
+                        components: {
+                            Table: {
+                                headerBg: '#FAF5E8',
+                                headerColor: '#C9961B',
+                            },
+                        },
                     }}
                 >
                     <Table
