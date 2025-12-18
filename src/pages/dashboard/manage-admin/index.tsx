@@ -53,7 +53,7 @@ const userData: User[] = [
     },
 ];
 
-export default function Organizers({ dashboard }: { dashboard?: boolean }) {
+export default function ManageAdmin({ dashboard }: { dashboard?: boolean }) {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [isBlockModalVisible, setIsBlockModalVisible] = useState<boolean>(false);

@@ -17,9 +17,9 @@ const sidebarItems: TSidebarItem[] = [
         icon: <LuLayoutDashboard size={24} />,
     },
     {
-        key: 'banners',
+        key: 'locker-management',
         label: 'Locker Management',
-        path: 'banners',
+        path: 'locker-management',
         icon: <GiKeyring size={24} />,
     },
     // {
@@ -47,15 +47,15 @@ const sidebarItems: TSidebarItem[] = [
     //     icon: <LuUserCheck size={24} />,
     // },
     {
-        key: 'orders',
+        key: 'payments',
         label: 'Payments',
-        path: 'orders',
+        path: 'payments',
         icon: <GiMoneyStack size={24} />,
     },
     {
-        key: 'chefs',
+        key: 'manage-admin',
         label: 'Manage Admin',
-        path: 'chefs',
+        path: 'manage-admin',
         icon: <PiUserGear size={24} />,
     },
     {

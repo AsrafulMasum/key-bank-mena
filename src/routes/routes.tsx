@@ -12,13 +12,12 @@ import Profile from '../pages/dashboard/profile';
 import Notification from '../pages/dashboard/notification';
 import PrivacyPolicy from '../pages/dashboard/privacy-policy';
 import Orders from '../pages/dashboard/orders';
-import Chefs from '../pages/dashboard/chefs';
 import AboutUs from '../pages/dashboard/about-us';
-import Transactions from '../pages/dashboard/transactions';
-import AppSliderList from '../pages/dashboard/banners';
 import Subscription from '../pages/dashboard/package';
 import AdminProfile from '../pages/dashboard/admin-profile';
 import ChangePassword from '../pages/dashboard/change-password';
+import LockerManagement from '../pages/dashboard/locker-management';
+import ManageAdmin from '../pages/dashboard/manage-admin';
 
 const router = createBrowserRouter([
     {
@@ -27,11 +26,10 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             { path: '', element: <Dashboard /> },
-            { path: 'orders', element: <Orders /> },
-            { path: 'banners', element: <AppSliderList /> },
-            { path: 'chefs', element: <Chefs /> },
+            { path: 'payments', element: <Orders /> },
+            { path: 'locker-management', element: <LockerManagement /> },
+            { path: 'manage-admin', element: <ManageAdmin /> },
             { path: 'users', element: <Users /> },
-            { path: 'transactions', element: <Transactions /> },
             { path: 'subscriptions', element: <Subscription /> },
             { path: 'profile', element: <Profile /> },
             { path: 'adminProfile', element: <AdminProfile /> },

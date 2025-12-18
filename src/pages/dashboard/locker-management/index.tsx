@@ -182,7 +182,7 @@ const statusColorMap = {
     active: { color: '#52C41A', bg: '#D9F2CD' },
 };
 
-const AppSliderList: React.FC = () => {
+const LockerManagement: React.FC = () => {
     const [page, setPage] = useState<number>(1);
     const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -553,7 +553,7 @@ const AppSliderList: React.FC = () => {
     );
 };
 
-export default AppSliderList;
+export default LockerManagement;
 
 // ===================================================
 //   Add / Edit Modal Component
