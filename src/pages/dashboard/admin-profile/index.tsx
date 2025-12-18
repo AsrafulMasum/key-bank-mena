@@ -1,10 +1,49 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Card, Avatar, Button, Input, Typography } from 'antd';
-import { EditOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { EditOutlined, CameraOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 
 const AdminProfile: React.FC = () => {
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [isEditing, setIsEditing] = useState(false);
+
+    const [formData, setFormData] = useState({
+        fullName: 'Admin Humphrey',
+        contact: '+99-01846875456',
+        email: 'admin.humphrey@example.com',
+        avatar: 'https://i.pravatar.cc/150?img=12',
+    });
+
+    const handleChange = (field: string, value: string) => {
+        setFormData((prev) => ({ ...prev, [field]: value }));
+    };
+
+    const handleAvatarClick = () => {
+        if (isEditing) {
+            fileInputRef.current?.click();
+        }
+    };
+
+    const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const preview = URL.createObjectURL(file);
+        setFormData((prev) => ({ ...prev, avatar: preview }));
+
+        // keep `file` for API upload if needed
+    };
+
+    const handleEdit = () => {
+        setIsEditing(true);
+    };
+
+    const handleSave = () => {
+        console.log('Saved Data:', formData);
+        setIsEditing(false);
+    };
+
     return (
         <Card
             style={{
@@ -28,23 +67,27 @@ const AdminProfile: React.FC = () => {
                     borderRadius: 12,
                 }}
             >
-                {/* Edit button */}
-                <Button
-                    icon={<EditOutlined />}
-                    style={{
-                        position: 'absolute',
-                        right: 12,
-                        top: 12,
-                        color: '#2E7D32',
-                        backgroundColor: '#099F2A26',
-                        border: 'none',
-                        borderRadius: 6,
-                        fontSize: 13,
-                        height: 32,
-                    }}
-                >
-                    Edit profile
-                </Button>
+                {/* Edit profile button */}
+                {!isEditing && (
+                    <Button
+                        icon={<EditOutlined />}
+                        onClick={handleEdit}
+                        style={{
+                            position: 'absolute',
+                            right: 20,
+                            top: 20,
+                            color: '#2E7D32',
+                            backgroundColor: '#099F2A26',
+                            border: 'none',
+                            borderRadius: 6,
+                            fontSize: 14,
+                            padding: '0px 16px',
+                            height: 40,
+                        }}
+                    >
+                        Edit profile
+                    </Button>
+                )}
 
                 {/* Avatar + name */}
                 <div
@@ -52,20 +95,43 @@ const AdminProfile: React.FC = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        backgroundColor: '#FBFBFB',
                         gap: 8,
                     }}
                 >
-                    <Avatar size={64} src="https://i.pravatar.cc/150?img=12" />
-                    <Text
+                    <div
                         style={{
-                            fontSize: 16,
-                            fontWeight: 600,
-                            color: '#1F1F1F',
+                            position: 'relative',
+                            cursor: isEditing ? 'pointer' : 'default',
                         }}
+                        onClick={handleAvatarClick}
                     >
-                        Admin Humphrey
-                    </Text>
+                        <Avatar size={80} src={formData.avatar} />
+
+                        {/* Camera icon when editing */}
+                        {isEditing && (
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    bottom: -2,
+                                    right: -2,
+                                    width: 22,
+                                    height: 22,
+                                    backgroundColor: '#2E7D32',
+                                    borderRadius: '50%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <CameraOutlined style={{ color: '#fff', fontSize: 12 }} />
+                            </div>
+                        )}
+                    </div>
+
+                    <Text style={{ fontSize: 16, fontWeight: 600 }}>{formData.fullName}</Text>
+
+                    {/* Hidden file input */}
+                    <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={handleAvatarChange} />
                 </div>
             </div>
 
@@ -75,50 +141,82 @@ const AdminProfile: React.FC = () => {
                 <div>
                     <Text style={{ fontSize: 13, color: '#6B7280' }}>Full Name</Text>
                     <Input
-                        value="Admin Humphrey"
-                        readOnly
+                        value={formData.fullName}
+                        disabled={!isEditing}
+                        onChange={(e) => handleChange('fullName', e.target.value)}
                         style={{
                             marginTop: 6,
                             height: 52,
                             backgroundColor: '#FBFBFB',
                             borderRadius: 12,
                             border: 'none',
+                            WebkitTextFillColor: '#1F1F1F',
                         }}
                     />
                 </div>
+
+                {/* Email */}
+                {!isEditing && (
+                    <div>
+                        <Text style={{ fontSize: 13, color: '#6B7280' }}>Email</Text>
+                        <Input
+                            value={formData.email}
+                            disabled
+                            style={{
+                                marginTop: 6,
+                                height: 52,
+                                backgroundColor: '#FBFBFB',
+                                borderRadius: 12,
+                                border: 'none',
+                                WebkitTextFillColor: '#1F1F1F',
+                            }}
+                        />
+                    </div>
+                )}
 
                 {/* Contact Number */}
                 <div>
                     <Text style={{ fontSize: 13, color: '#6B7280' }}>Contact Number</Text>
                     <Input
-                        value="+99-01846875456"
-                        readOnly
+                        value={formData.contact}
+                        disabled={!isEditing}
+                        onChange={(e) => handleChange('contact', e.target.value)}
                         style={{
                             marginTop: 6,
                             height: 52,
                             backgroundColor: '#FBFBFB',
                             borderRadius: 12,
                             border: 'none',
+                            WebkitTextFillColor: '#1F1F1F',
                         }}
                     />
                 </div>
 
-                {/* Password */}
-                <div>
-                    <Text style={{ fontSize: 13, color: '#6B7280' }}>Password</Text>
-                    <Input.Password
-                        value="********"
-                        readOnly
-                        iconRender={() => <EyeInvisibleOutlined />}
+                {/* Save & Change button */}
+                {isEditing && (
+                    <div
                         style={{
-                            marginTop: 6,
-                            height: 52,
-                            backgroundColor: '#FBFBFB',
-                            borderRadius: 12,
-                            border: 'none',
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            marginTop: 16,
                         }}
-                    />
-                </div>
+                    >
+                        <Button
+                            onClick={handleSave}
+                            style={{
+                                backgroundColor: '#D4A017',
+                                border: 'none',
+                                borderRadius: 8,
+                                height: 40,
+                                padding: '0 24px',
+                                fontWeight: 500,
+                                color: '#fff',
+                            }}
+                        >
+                            Save & Change
+                        </Button>
+                    </div>
+                )}
             </div>
         </Card>
     );
